@@ -147,7 +147,7 @@ export function FiltersDropdown({ value, onChange }: FiltersDropdownProps) {
                 }
               >
                 <option value="">All currencies</option>
-                {(currencies ?? []).map((cur) => (
+                {(currencies ?? []).map((cur: string) => (
                   <option key={cur} value={cur}>
                     {cur}
                   </option>
