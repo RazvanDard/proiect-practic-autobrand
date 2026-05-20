@@ -1,0 +1,25 @@
+node_modules/
+dist/
+build/
+.venv/
+.venv-linux/
+__pycache__/
+*.pyc
+.env
+.env.local
+.env.*.local
+.DS_Store
+.idea/
+.vscode/
+storage/
+playwright-report/
+test-results/
+.convex/
+*.log
+
+# Convex CLI scaffolding / generated
+web/.agents/
+web/CLAUDE.md
+web/AGENTS.md
+web/skills-lock.json
+web/convex/_generated/
