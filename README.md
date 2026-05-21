@@ -25,7 +25,7 @@ React + Vite           Convex                 FastAPI + Playwright
 |  (UI)      | mutate  |  (DB, auth,    |HTTP|  /scrape            |
 |            | action  |   cron, FX)    |    |  /parse-invoice     |
 +------------+         +----------------+    +---------------------+
-                              ^ cron 0 12-18 * * *
+                              ^ cron hourly, 12:00-18:00 Europe/Bucharest
 ```
 
 Fiecare are treaba lui:

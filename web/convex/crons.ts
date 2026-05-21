@@ -4,9 +4,9 @@ import { internal } from "./_generated/api";
 /**
  * Scheduled Convex jobs.
  *
- * - **scrape-products** — runs every hour at minute 0 between 12:00 and 18:00
- *   server-time, matching the brief's `12:00–18:00 hourly`. Convex crons run
- *   in UTC; if you need RO local time, adjust the hour range here.
+ * - **scrape-products** — runs every hour at minute 0 for the UTC hours that
+ *   can map to 12:00-18:00 in Europe/Bucharest. Convex crons run in UTC, so
+ *   `runScrapeCron` also gates by Bucharest local time to handle DST.
  *
  * - **refresh-fx** — pulls BNR rates once a day. Cheap, but we keep the
  *   cadence conservative because the data only updates ~once per business
@@ -16,7 +16,7 @@ const crons = cronJobs();
 
 crons.cron(
   "scrape-products",
-  "0 12,13,14,15,16,17,18 * * *",
+  "0 9,10,11,12,13,14,15,16 * * *",
   internal.scrape.runScrapeCron,
 );
 

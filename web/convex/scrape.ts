@@ -38,6 +38,30 @@ type ScrapeResponse = {
   scraped_at: string;
 };
 
+const BUCHAREST_TIME_ZONE = "Europe/Bucharest";
+const SCRAPE_START_HOUR_LOCAL = 12;
+const SCRAPE_END_HOUR_LOCAL = 18;
+
+function isBucharestScrapeWindow(now = new Date()): boolean {
+  const hourPart = new Intl.DateTimeFormat("en-US", {
+    timeZone: BUCHAREST_TIME_ZONE,
+    hour: "2-digit",
+    hourCycle: "h23",
+  })
+    .formatToParts(now)
+    .find((part) => part.type === "hour");
+
+  if (!hourPart) {
+    throw new Error("Could not determine Bucharest local hour.");
+  }
+
+  const localHour = Number(hourPart.value);
+  return (
+    localHour >= SCRAPE_START_HOUR_LOCAL &&
+    localHour <= SCRAPE_END_HOUR_LOCAL
+  );
+}
+
 async function executeScrape(
   ctx: ActionCtx,
   triggeredBy: "cron" | "manual",
@@ -115,8 +139,12 @@ export const runScrape = action({
 /** Internal cron entry point — see {@link executeScrape}. */
 export const runScrapeCron = internalAction({
   args: {},
-  handler: async (ctx): Promise<{ inserted: number; updated: number }> =>
-    executeScrape(ctx, "cron"),
+  handler: async (ctx): Promise<{ inserted: number; updated: number }> => {
+    if (!isBucharestScrapeWindow()) {
+      return { inserted: 0, updated: 0 };
+    }
+    return executeScrape(ctx, "cron");
+  },
 });
 
 /**

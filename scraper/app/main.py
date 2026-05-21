@@ -75,10 +75,10 @@ def health() -> dict[str, str]:
 async def scrape() -> ScrapeResponse:
     """Run a fresh Playwright scrape and return the discovered products.
 
-    The Convex cron (``0 12-18 * * *``) calls this hourly. Manual invocations
-    from the React "Scrape now" button hit the same Convex action which then
-    proxies here. Failures bubble up as HTTP 500 so Convex surfaces them to the
-    UI.
+    The Convex cron calls this hourly between 12:00 and 18:00 Europe/Bucharest.
+    Manual invocations from the React "Scrape now" button hit the same Convex
+    action which then proxies here. Failures bubble up as HTTP 500 so Convex
+    surfaces them to the UI.
     """
     products = await scrape_products()
     return ScrapeResponse(products=products, scraped_at=scrape_completion_timestamp())
