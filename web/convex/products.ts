@@ -189,6 +189,7 @@ export const update = mutation({
     id: v.id("products"),
     name: v.string(),
     price: v.number(),
+    priceRon: v.number(),
     currency: v.string(),
     description: v.string(),
     imageUrl: v.string(),
@@ -213,6 +214,7 @@ export const update = mutation({
     await ctx.db.patch(args.id, {
       name: args.name,
       price: args.price,
+      priceRon: args.priceRon,
       currency: args.currency,
       description: args.description,
       imageUrl: args.imageUrl,

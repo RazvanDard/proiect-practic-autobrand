@@ -57,6 +57,7 @@ export function EditProductDialog({ product, onClose }: EditProductDialogProps) 
         id: product!._id as Id<"products">,
         name: form.name.trim(),
         price: Number(form.price),
+        priceRon: Number(form.price * 5),
         currency: form.currency.trim().toUpperCase(),
         description: form.description.trim(),
         imageUrl: form.imageUrl.trim(),
